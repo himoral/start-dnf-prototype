@@ -6,8 +6,9 @@
   <meta name="theme-color" content="#101316">
   <title>START · DNF 手机操作体验</title>
   <link rel="stylesheet" href="app.css">
-  <link rel="stylesheet" href="controls.css">
+  <link rel="stylesheet" href="controls.css?v=20261018">
   <link rel="stylesheet" href="refinements.css">
+  <link rel="stylesheet" href="click-ui.css?v=20261018">
 </head>
 <body>
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -70,9 +71,11 @@
     <button id="world-loot" class="world-loot" hidden><span>✧</span>拾取战利品</button><div id="effects" class="effects"></div><div class="world-feedback" id="world-feedback" aria-live="polite"></div>
     <div class="raid-mechanic" id="raid-mechanic" hidden><span>队长机制</span><b>共鸣装置等待激活</b><small>使用「队长特殊键」完成机制</small></div>
     <div class="game-hud" id="game-hud"><div class="health-orb">HP</div><div class="hud-middle"><span id="hud-role">极诣 · 剑魂</span><div class="hp-line"><i></i></div><small id="hud-fatigue">疲劳 156 / 156</small></div><div class="mana-orb">MP</div></div>
+    <div id="town-world" class="town-world" hidden><button class="town-poi town-shop" data-town-scene="shop" aria-label="打开城镇材料商店"><b>◈</b><span>材料商店<small>购买与补给</small></span></button><button class="town-poi town-portal" data-town-battle="daily" aria-label="进入日常副本"><b>✧</b><span>前往地下城<small>开始日常挑战 ›</small></span></button><div class="town-name">赫顿玛尔<small>HENDON MYRE · 城镇</small></div><div class="town-shortcuts"><button data-town-scene="bag"><span>▦</span>背包</button><button data-town-scene="upgrade"><span>⚔</span>装备强化</button><button data-town-scene="activity"><span>✦</span>日常活动</button><button data-town-scene="team"><span>♧</span>寻找队伍</button></div></div>
+    <div id="town-character-shadow" class="town-character-shadow" hidden></div>
     <div id="click-workspace" class="click-workspace" hidden></div>
     <div id="combat-controls"></div>
-    <div id="click-controls" class="click-controls" hidden><button id="click-escape" class="utility-key">Esc<small>返回</small></button><div class="click-switch"><span>普通点击</span><div><button class="selected" data-click="left">左键</button><button data-click="right">右键</button></div></div><div class="click-switch"><span>组合点击</span><div><button data-click="shift-left">Shift + 左键</button><button data-click="shift-right">Shift + 右键</button></div></div><button id="click-lock" class="lock-key" aria-pressed="false" title="锁定当前点击方式">◇<small>单次</small></button><button id="click-tools" class="utility-key">···<small>工具</small></button></div>
+    <div id="click-controls" class="click-controls" role="toolbar" aria-label="可拖动的点击操作栏" hidden><button id="click-drag-handle" class="click-drag-handle" aria-label="拖动操作栏，可使用方向键移动" title="按住拖动操作栏"><svg viewBox="0 0 16 24" aria-hidden="true"><path d="M5 5h.01M11 5h.01M5 12h.01M11 12h.01M5 19h.01M11 19h.01" stroke-linecap="round" stroke-width="3"/></svg></button><button id="click-escape" class="utility-key escape-key">Esc<small>返回</small></button><div class="click-switch"><span>普通点击</span><div><button class="selected" data-click="left" aria-pressed="true">左键</button><button data-click="right" aria-pressed="false">右键</button></div></div><div class="click-switch"><span>组合点击</span><div><button data-click="shift-left" aria-pressed="false">Shift + 左键</button><button data-click="shift-right" aria-pressed="false">Shift + 右键</button></div></div><div class="click-switch count-switch"><span>点击次数 · 选中锁定</span><div><button data-click-count="1" class="selected" aria-pressed="true">单击</button><button data-click-count="2" aria-pressed="false">双击</button></div></div><button id="click-tools" class="utility-key" aria-label="更多点击工具">···<small>工具</small></button></div>
     <div class="game-status" id="game-status"><span class="live-dot"></span><span id="input-status">滑动选技，松手释放</span></div><div class="home-indicator"></div>
   </div></div><div class="device-caption"><span><i></i> iPhone 16 Pro Max · 横屏安全区域</span><span>鼠标拖动或手指滑动均可体验</span></div></div>
   <aside class="guide-panel"><div class="guide-header"><span class="eyebrow">TRY IT YOURSELF</span><span id="guide-count">01 / 03</span></div><h2 id="guide-title">一轮副本，轻松上手。</h2><p id="guide-description">试试精简后的日常战斗操作。</p><div class="guide-tasks" id="guide-tasks"></div><div class="guide-tip" id="guide-tip"></div><button class="guide-reset" id="reset-demo">↻ 重置当前体验</button><div class="input-log"><span>最近操作</span><ol id="action-log"><li>等待你的第一个操作</li></ol></div></aside></div>
@@ -80,6 +83,6 @@
 </section>
 <div class="modal-backdrop" id="modal-backdrop" hidden><section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="关闭弹窗">×</button><span class="eyebrow" id="modal-eyebrow">START CLOUD GAMING</span><h2 id="modal-title"></h2><div id="modal-body"></div><div class="modal-actions" id="modal-actions"></div></section></div>
 <div class="toast" id="toast" role="status"></div>
-<script src="controls.js"></script><script src="app.js"></script>
+<script src="controls.js?v=20261018"></script><script src="click-ui.js?v=20261018"></script><script src="app.js?v=20261018"></script>
 </body>
 </html>

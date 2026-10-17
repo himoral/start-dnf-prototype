@@ -1,5 +1,11 @@
 # START · DNF 手机操作体验（公开演示版）
 
+[在线体验](https://himoral.github.io/start-dnf-prototype/)
+
+新版点击方案默认在城镇显示角色，顶部半透明操作栏支持拖动，鼠标方式与单击／双击分别保持选中。战斗技能在按钮周围展开等分扇区圆盘，不滑动时松手释放默认技能。
+
+城镇街道采用 [DFO 官方 Origin: Area](https://www.dfoneople.com/news/updates/877/Origin/Origin:-Area) 的赫顿玛尔原图；城镇角色透明版使用内置 image_gen 从原角色素材生成，作为原型示意。战斗场景仍使用原角色动画。
+
 静态网页交互原型，可直接打开 index.html，或将本目录内容作为 GitHub Pages 站点根目录。无需安装依赖或构建。保留 assets 和 steam 的相对目录结构。
 
 ## 公开素材说明

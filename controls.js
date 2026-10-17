@@ -72,7 +72,7 @@
       node.dataset.skillGroup = id;
       node.setAttribute('aria-haspopup', 'true');
       node.setAttribute('aria-expanded', 'false');
-      node.title = (isBuff ? '短按模拟全部 BUFF 输入；滑动可单独补放。' : '短按释放 ' + skills[0] + '；滑动选择其他技能。') + '技能为示例映射。';
+      node.title = (isBuff ? '短按模拟全部 BUFF 输入；滑动可单独补放。' : '原地松手释放 ' + skills[0] + '；滑动选择其他技能，回中心取消。') + '技能为示例映射。';
       return node;
     }
     function refreshBuff() {
@@ -127,37 +127,75 @@
     function showWheel(state) {
       hideWheel();
       wheelOwner = state.id;
+      var bounds = root.getBoundingClientRect();
+      var buttonBounds = state.node.getBoundingClientRect();
+      state.centerX = buttonBounds.left + buttonBounds.width / 2;
+      state.centerY = buttonBounds.top + buttonBounds.height / 2;
+      state.deadzone = buttonBounds.width * 0.46;
+      state.slop = Math.max(4, Math.min(10, buttonBounds.width * 0.12));
+      var x = state.centerX - bounds.left;
+      var y = state.centerY - bounds.top;
+      var margin = Math.max(2, bounds.width * 0.003);
+      var radius = Math.max(1, Math.min(buttonBounds.width * 1.25, x - margin, bounds.width - x - margin, y - margin, bounds.height - y - margin));
+      state.cancelRadius = radius * 1.28;
       wheel = element('div', 'dnf-skill-wheel');
       wheel.setAttribute('role', 'status');
       wheel.setAttribute('aria-live', 'polite');
       wheel.dataset.skillGroup = state.groupId;
-      wheel.appendChild(element('div', 'dnf-wheel-title', state.group.title + ' · 滑选预览'));
-      var dial = element('div', 'dnf-wheel-dial');
-      var center = element('div', 'dnf-wheel-center', '滑动选择');
-      dial.appendChild(center);
+      wheel.style.left = (x / bounds.width * 100) + '%';
+      wheel.style.top = (y / bounds.height * 100) + '%';
+      wheel.style.width = (radius * 2 / bounds.width * 100) + '%';
+      wheel.style.height = (radius * 2 / bounds.height * 100) + '%';
+      function svgNode(tag, attrs, text) {
+        var node = doc.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.keys(attrs).forEach(function (key) { node.setAttribute(key, attrs[key]); });
+        if (text) node.textContent = text;
+        return node;
+      }
+      var dial = svgNode('svg', { 'class': 'dnf-wheel-svg', viewBox: '0 0 100 100', 'aria-hidden': 'true' });
+      var count = state.group.skills.length;
       state.group.skills.forEach(function (name, index) {
-        var angle = -Math.PI / 2 + index * Math.PI * 2 / state.group.skills.length;
-        var item = element('div', 'dnf-wheel-item', name);
-        item.dataset.skillIndex = String(index);
-        item.style.left = (50 + 35 * Math.cos(angle)) + '%';
-        item.style.top = (50 + 35 * Math.sin(angle)) + '%';
-        dial.appendChild(item);
+        var angle = -Math.PI / 2 + index * Math.PI * 2 / count;
+        var half = Math.PI / count;
+        var startX = 50 + 49 * Math.cos(angle - half);
+        var startY = 50 + 49 * Math.sin(angle - half);
+        var endX = 50 + 49 * Math.cos(angle + half);
+        var endY = 50 + 49 * Math.sin(angle + half);
+        var sector = svgNode('g', { 'class': 'dnf-wheel-sector', 'data-wheel-sector': index, 'data-selected': 'false' });
+        sector.appendChild(svgNode('path', { d: 'M 50 50 L ' + startX + ' ' + startY + ' A 49 49 0 0 1 ' + endX + ' ' + endY + ' Z' }));
+        var labelX = 50 + 32 * Math.cos(angle), labelY = 50 + 32 * Math.sin(angle);
+        var label = svgNode('text', { 'class': 'dnf-wheel-label', x: labelX, y: labelY });
+        if (name.length > 4) {
+          var split = Math.ceil(name.length / 2);
+          label.appendChild(svgNode('tspan', { x: labelX, dy: -3 }, name.slice(0, split)));
+          label.appendChild(svgNode('tspan', { x: labelX, dy: 6 }, name.slice(split)));
+        } else label.textContent = name;
+        sector.appendChild(label);
+        dial.appendChild(sector);
       });
+      dial.appendChild(svgNode('circle', { 'class': 'dnf-wheel-center', cx: 50, cy: 50, r: 19 }));
+      dial.appendChild(svgNode('text', { 'class': 'dnf-wheel-center-title', x: 50, y: 47 }));
+      dial.appendChild(svgNode('text', { 'class': 'dnf-wheel-center-tip', x: 50, y: 55 }));
       wheel.appendChild(dial);
-      wheel.appendChild(element('div', 'dnf-wheel-selection', state.group.isBuff ? '短按：全部 BUFF 输入模拟' : '短按：' + state.group.skills[0]));
-      wheel.appendChild(element('div', 'dnf-wheel-tip', '按住滑动 · 松手释放一个 · 回中心或拖远取消'));
       root.appendChild(wheel);
       state.node.setAttribute('aria-expanded', 'true');
+      state.selected = state.group.isBuff ? -1 : 0;
+      updateWheel(state);
     }
     function updateWheel(state) {
       if (!wheel || wheelOwner !== state.id) return;
-      wheel.querySelectorAll('[data-skill-index]').forEach(function (node) {
-        node.classList.toggle('is-selected', Number(node.dataset.skillIndex) === state.selected);
+      wheel.querySelectorAll('[data-wheel-sector]').forEach(function (node) {
+        var selected = Number(node.dataset.wheelSector) === state.selected;
+        node.classList.toggle('is-selected', selected);
+        node.setAttribute('data-selected', String(selected));
       });
       var selected = state.selected >= 0;
-      wheel.classList.toggle('is-cancelling', !selected && state.everSlid);
-      wheel.querySelector('.dnf-wheel-center').textContent = selected ? '松手释放' : (state.everSlid ? '松手取消' : '滑动选择');
-      wheel.querySelector('.dnf-wheel-selection').textContent = selected ? state.group.skills[state.selected] : (state.everSlid ? '已取消选择' : '长按不会触发；滑动选择一个技能');
+      var cancelling = !selected && (state.everSlid || state.group.isBuff && Date.now() - state.started >= 360);
+      wheel.dataset.selected = selected ? String(state.selected) : 'none';
+      wheel.classList.toggle('is-cancelling', cancelling);
+      wheel.querySelector('.dnf-wheel-center-title').textContent = selected ? (state.everSlid ? '松手释放' : '默认技能') : (cancelling ? '松手取消' : '全部 BUFF');
+      wheel.querySelector('.dnf-wheel-center-tip').textContent = selected ? (state.everSlid ? '回中心取消' : '滑动可换技') : (cancelling ? '滑动可重选' : '短按全组');
+      wheel.setAttribute('aria-label', state.group.title + '：' + (selected ? state.group.skills[state.selected] : (cancelling ? '取消选择' : '短按全部 BUFF 输入')));
     }
     function releaseCapture(state) {
       try { if (state.node.hasPointerCapture(state.id)) state.node.releasePointerCapture(state.id); } catch (_) {}
@@ -232,14 +270,13 @@
       event.preventDefault();
       if (state.kind === 'move') { moveJoystick(state, event); return; }
       if (state.kind !== 'group') return;
-      var dx = event.clientX - state.startX;
-      var dy = event.clientY - state.startY;
+      var dx = event.clientX - state.centerX;
+      var dy = event.clientY - state.centerY;
       var distance = Math.hypot(dx, dy);
-      var width = root.getBoundingClientRect().width;
-      var deadzone = Math.max(14, Math.min(23, width * 0.019));
-      var outside = Math.max(92, Math.min(170, width * 0.17));
-      if (distance > deadzone) state.everSlid = true;
-      if (distance <= deadzone || distance > outside) state.selected = -1;
+      var travelled = Math.hypot(event.clientX - state.startX, event.clientY - state.startY);
+      if (distance > state.deadzone && travelled > state.slop) state.everSlid = true;
+      if (!state.everSlid) state.selected = state.group.isBuff ? -1 : 0;
+      else if (distance <= state.deadzone || distance > state.cancelRadius) state.selected = -1;
       else {
         var count = state.group.skills.length;
         var angle = Math.atan2(dy, dx) + Math.PI / 2;
@@ -259,7 +296,7 @@
       cancelPointer(state, 'release');
       if (state.kind === 'group') {
         if (tap && state.group.isBuff) { startBuff(); return; }
-        if (tap) selected = 0;
+        if (!state.everSlid && !state.group.isBuff) selected = 0;
         if (selected >= 0) emit('skill', state.group.skills[selected], { group: state.groupId, phase: 'tap', singleSupplement: !!state.group.isBuff, simulated: true });
         else hint('已取消本次选择，没有发送技能输入。');
       } else if (state.kind === 'button' && inside) action(state.control);
@@ -283,6 +320,7 @@
       } else action(id);
     }
     function onBlur() { cancel('blur'); }
+    function onResize() { cancel('resize'); }
     function onVisibility() { if (doc.hidden) cancel('hidden'); }
     function preventMenu(event) { if (event.target.closest('[data-control]')) event.preventDefault(); }
     function render() {
@@ -330,6 +368,7 @@
     root.addEventListener('click', onKeyboardClick);
     root.addEventListener('contextmenu', preventMenu);
     win.addEventListener('blur', onBlur);
+    win.addEventListener('resize', onResize);
     doc.addEventListener('visibilitychange', onVisibility);
     render();
     return {
@@ -361,6 +400,7 @@
         root.removeEventListener('click', onKeyboardClick);
         root.removeEventListener('contextmenu', preventMenu);
         win.removeEventListener('blur', onBlur);
+        win.removeEventListener('resize', onResize);
         doc.removeEventListener('visibilitychange', onVisibility);
         root.replaceChildren();
         root.classList.remove('dnf-controls');
