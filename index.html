@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101316">
+  <title>START · DNF 手机操作体验</title>
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="controls.css">
+  <link rel="stylesheet" href="refinements.css">
+</head>
+<body>
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H15v-6H9v6H3Z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 10h18v4H3zm2 4v7h14v-7M12 10v11M12 9C3 10 4 1 8 3c3 1 4 6 4 6Zm0 0s1-5 4-6c4-2 5 7-4 6Z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8Z"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 3v8m8 2v8"/></symbol>
+<symbol id="i-expand" viewBox="0 0 24 24"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+<symbol id="i-mouse" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="7"/><path d="M12 2v8M5 10h14"/></symbol>
+<symbol id="i-sword" viewBox="0 0 24 24"><path d="m7 17 11-14 3-1-1 4L7 17m-3-4 7 7m-5-3-4 5"/></symbol>
+<symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 6 5 5 4-8 4 8 5-5-2 13H5ZM6 22h12"/></symbol>
+</defs></svg>
+<div id="platform">
+  <header class="platform-header">
+    <button class="brand" data-nav="home" aria-label="START 首页"><span class="brand-mark"></span>START</button>
+    <form class="search" id="search-form"><span class="search-icon"></span><input id="search-input" placeholder="搜索游戏，开启下一场冒险" aria-label="搜索游戏"><button type="submit">搜索</button></form>
+    <div class="header-links"><button data-info="member"><svg><use href="#i-crown"/></svg><span>会员</span></button><button data-info="welfare"><svg><use href="#i-gift"/></svg><span>福利</span></button><button data-info="assets"><span class="outline-icon">◇</span><span>资产</span></button></div>
+    <div class="account"><span class="account-avatar">冒</span><span>冒险家 <small>已登录</small></span></div>
+  </header>
+  <aside class="platform-sidebar">
+    <nav><button class="nav-button active" data-nav="home"><svg><use href="#i-home"/></svg><span>首页推荐</span></button><button class="nav-button" data-nav="library"><svg><use href="#i-grid"/></svg><span>我的游戏</span></button><button class="nav-button" data-nav="welfare"><svg><use href="#i-gift"/></svg><span>福利中心</span></button></nav>
+    <div class="sidebar-recent"><small>最近在玩</small><button data-nav="dnf"><span class="recent-icon dnf-icon">D</span><span>地下城与勇士<small>创新世纪</small></span></button><a href="steam/index.html#steam-detail"><span class="recent-icon steam-icon">◉</span><span>Steam 大屏模式<small>继续你的游戏库</small></span></a></div>
+    <div class="sidebar-bottom"><span class="live-dot"></span> 所有设备，同一场冒险 <small>START 云游戏 · 交互原型</small></div>
+  </aside>
+  <main class="platform-main" id="home-page">
+    <div class="catalog-tabs"><button class="active" data-filter="all">推荐<span>✦</span></button><button data-filter="library">游戏库</button><button data-filter="cloud">云端大作</button><button data-filter="touch">手机畅玩</button></div>
+    <section class="featured" aria-label="DNF 推荐">
+      <img class="featured-art" src="assets/town.png" alt="阿拉德的天空之城">
+      <div class="featured-shade"></div><div class="featured-copy"><span class="eyebrow">地下城与勇士 · 创新世纪</span><h1>重返阿拉德<br><span>以指尖，再燃战意。</span></h1><p>属于你的冒险，现在随身开启。</p><button class="primary-button" data-nav="dnf">探索 DNF <svg><use href="#i-arrow"/></svg></button><div class="hero-tags"><span>端游云端畅玩</span><span>三套手机操作方案</span></div></div><span class="featured-index">01 <span>/ 02</span></span>
+    </section>
+    <section class="catalog-section"><div class="section-heading"><div><span class="eyebrow">PICK YOUR NEXT ADVENTURE</span><h2 id="catalog-title">为你推荐</h2></div><span id="catalog-counter">3 款云端体验</span></div>
+    <div class="game-grid" id="game-grid">
+      <button class="game-card" data-game="dnf" data-nav="dnf"><div class="game-cover dnf-cover"><img src="assets/dungeon.png" alt="DNF 深渊场景"><span class="card-badge">手机操作新体验</span><span class="cover-letter">DNF<small>地下城与勇士</small></span><span class="cover-launch">查看游戏 <svg><use href="#i-arrow"/></svg></span></div><h3>地下城与勇士：创新世纪</h3><p>点击、日常、高阶，切换你的战斗节奏</p><div class="card-meta"><span>动作格斗</span><span>端游</span><span class="blue-text">三套操作方案</span></div></button>
+      <a class="game-card" data-game="steam" href="steam/index.html#steam-detail"><div class="game-cover steam-cover"><img src="steam/assets/steam-home.svg" alt="Steam 大屏模式"><span class="card-badge muted-badge">大屏模式</span><span class="steam-word">◉ STEAM<small>你的游戏库，随时抵达</small></span><span class="cover-launch">进入原有体验 <svg><use href="#i-arrow"/></svg></span></div><h3>Steam 大屏模式</h3><p>寻找、准备和启动自己的 Steam 游戏</p><div class="card-meta"><span>云电脑</span><span>个人游戏库</span></div></a>
+      <button class="game-card" data-game="cloud" data-info="cloud"><div class="game-cover cloud-cover"><div class="cloud-monitor"><span class="brand-mark"></span></div><span class="cloud-word">让设备，突破边界。<small>START CLOUD PC</small></span></div><h3>云电脑</h3><p>轻装上阵，连接更大的游戏世界</p><div class="card-meta"><span>云端设备</span><span>键鼠畅玩</span></div></button>
+    </div><div class="empty-search" id="empty-search" hidden>没有找到匹配的体验。试试搜索“DNF”或“Steam”。</div></section>
+  </main>
+  <main class="platform-main" id="detail-page" hidden>
+    <div class="detail-heading"><button class="icon-button" data-nav="home" aria-label="返回首页"><svg><use href="#i-back"/></svg></button><h1>地下城与勇士：创新世纪</h1><span class="pill">端游</span></div>
+    <div class="detail-grid"><section><div class="detail-hero"><img id="detail-hero-art" src="assets/dungeon.png" alt="DNF 官方场景"><div class="detail-hero-copy"><span>DNF · CLOUD ADVENTURE</span><h2>以指尖<br>再战阿拉德</h2><p>熟悉的世界，全新的操作节奏。</p></div><button class="hero-play" data-launch="daily" aria-label="开始日常战斗体验"><svg><use href="#i-play"/></svg></button><span class="visual-caption">官方场景素材 · 操作方案演示</span></div>
+    <div class="detail-thumbs"><button class="selected" data-preview="dungeon"><img src="assets/dungeon.png" alt=""><span>日常战斗</span></button><button data-preview="town"><img src="assets/town.png" alt=""><span>城镇与养成</span></button><button data-preview="raid"><img src="assets/dungeon.png" alt=""><span>高阶团本</span></button></div>
+    <div class="detail-description"><h3>你的操作，跟上你的节奏。</h3><p>商城养成少一点切换，日常刷本少一点负担，高阶团本保留每一次精准选择。按当前任务选择方案，熟悉的技能仍然在手边。</p><div class="detail-scheme-row"><button data-launch="click"><svg><use href="#i-mouse"/></svg><span>点击方案<small>商城 · 养成 · 活动</small></span><b>↗</b></button><button data-launch="daily"><svg><use href="#i-sword"/></svg><span>日常战斗<small>清疲劳 · 轻度副本</small></span><b>↗</b></button><button data-launch="advanced"><svg><use href="#i-crown"/></svg><span>高阶战斗<small>四人团 · 十二人团</small></span><b>↗</b></button></div></div></section>
+    <aside class="detail-service"><div class="dnf-mini-mark">DNF<span>地下城与勇士</span></div><h2>地下城与勇士：<br>创新世纪</h2><p>阿拉德的冒险，从未离你远去。</p><div class="service-tags"><span>动作格斗</span><span>端游</span><span>云端畅玩</span></div><div class="service-divider"></div><span class="service-kicker">手机操作专项体验</span><h3>为每一种玩法<br>找到合适的操作。</h3><div class="service-feature"><span>01</span> 四种点击方式，批量操作更顺手</div><div class="service-feature"><span>02</span> 滑动选技，松手释放</div><div class="service-feature"><span>03</span> 按角色保存你的习惯</div><div class="service-bottom"><span class="connection"><i></i>体验环境已准备就绪</span><button class="primary-button launch-button" id="open-launcher"><svg><use href="#i-play"/></svg>开始体验</button><small>交互原型 · 无需真实账号与支付</small></div></aside></div>
+  </main>
+</div>
+<section id="experience" hidden>
+  <header class="experience-header"><button class="back-to-detail" id="exit-experience"><svg><use href="#i-back"/></svg>游戏详情</button><div class="experience-title"><b>DNF</b><span>手机操作体验</span><span class="prototype-pill">交互原型</span></div><div class="experience-header-actions"><button id="open-settings"><svg><use href="#i-settings"/></svg>角色与布局</button><button id="immersive-button"><svg><use href="#i-expand"/></svg>沉浸体验</button></div></header>
+  <div class="experience-content"><div class="experience-intro"><div><span class="eyebrow">PLAY YOUR WAY</span><h1 id="mode-title">轻装上阵，畅快刷本。</h1></div><p id="mode-description">左手移动，右手滑动选技。拾取、再挑战，随手就能完成。</p></div>
+  <div class="mode-tabs" role="tablist" aria-label="操作方案"><button data-mode="click" role="tab"><svg><use href="#i-mouse"/></svg><span>点击方案<small>商城 / 养成 / 活动</small></span><i>01</i></button><button class="active" data-mode="daily" role="tab"><svg><use href="#i-sword"/></svg><span>日常战斗<small>清疲劳 / 轻度副本</small></span><i>02</i></button><button data-mode="advanced" role="tab"><svg><use href="#i-crown"/></svg><span>高阶战斗<small>四人团 / 十二人团</small></span><i>03</i></button></div>
+  <div class="play-layout"><div class="device-column"><div class="device-frame"><div class="device-camera" aria-hidden="true"></div><div id="game-stage" class="game-stage mode-daily scene-dungeon" tabindex="0" aria-label="DNF 横屏操作模拟区域">
+    <div class="world-bg"></div><div class="world-vignette"></div><div class="world-floor"></div>
+    <div class="world-location"><small id="world-region">深渊 · 最终调律者</small><strong id="world-progress">挑战进度 <span>0 / 3</span></strong></div>
+    <div class="cloud-toolbar"><button id="cloud-menu" class="cloud-logo" aria-label="打开会话菜单"><span class="brand-mark"></span></button><span class="network"><i></i> 18ms</span><button id="in-game-mode" class="mode-compact">日常战斗 <span>⌄</span></button></div>
+    <button class="restore-controls" id="restore-controls" hidden>显示操作栏</button>
+    <div class="actor" id="actor"><span class="actor-name">阿拉德冒险家<small id="role-world-name">极诣 · 剑魂</small></span><div class="actor-art" id="actor-art"><span class="warrior-head"></span><span class="warrior-body"></span><span class="warrior-blade"></span></div><div class="actor-aura"></div></div>
+    <div id="enemy" class="enemy"><span class="enemy-title">深渊守卫</span><div class="enemy-health"><i id="enemy-health"></i></div><div class="enemy-orb"><span>✦</span></div><div class="enemy-base"></div></div>
+    <button id="world-loot" class="world-loot" hidden><span>✧</span>拾取战利品</button><div id="effects" class="effects"></div><div class="world-feedback" id="world-feedback" aria-live="polite"></div>
+    <div class="raid-mechanic" id="raid-mechanic" hidden><span>队长机制</span><b>共鸣装置等待激活</b><small>使用「队长特殊键」完成机制</small></div>
+    <div class="game-hud" id="game-hud"><div class="health-orb">HP</div><div class="hud-middle"><span id="hud-role">极诣 · 剑魂</span><div class="hp-line"><i></i></div><small id="hud-fatigue">疲劳 156 / 156</small></div><div class="mana-orb">MP</div></div>
+    <div id="click-workspace" class="click-workspace" hidden></div>
+    <div id="combat-controls"></div>
+    <div id="click-controls" class="click-controls" hidden><button id="click-escape" class="utility-key">Esc<small>返回</small></button><div class="click-switch"><span>普通点击</span><div><button class="selected" data-click="left">左键</button><button data-click="right">右键</button></div></div><div class="click-switch"><span>组合点击</span><div><button data-click="shift-left">Shift + 左键</button><button data-click="shift-right">Shift + 右键</button></div></div><button id="click-lock" class="lock-key" aria-pressed="false" title="锁定当前点击方式">◇<small>单次</small></button><button id="click-tools" class="utility-key">···<small>工具</small></button></div>
+    <div class="game-status" id="game-status"><span class="live-dot"></span><span id="input-status">滑动选技，松手释放</span></div><div class="home-indicator"></div>
+  </div></div><div class="device-caption"><span><i></i> iPhone 16 Pro Max · 横屏安全区域</span><span>鼠标拖动或手指滑动均可体验</span></div></div>
+  <aside class="guide-panel"><div class="guide-header"><span class="eyebrow">TRY IT YOURSELF</span><span id="guide-count">01 / 03</span></div><h2 id="guide-title">一轮副本，轻松上手。</h2><p id="guide-description">试试精简后的日常战斗操作。</p><div class="guide-tasks" id="guide-tasks"></div><div class="guide-tip" id="guide-tip"></div><button class="guide-reset" id="reset-demo">↻ 重置当前体验</button><div class="input-log"><span>最近操作</span><ol id="action-log"><li>等待你的第一个操作</li></ol></div></aside></div>
+  <div class="experience-footer"><span>第三章设计方案 · V1.0</span><span>场景与数值用于交互演示；不连接实际游戏。</span><button id="source-info">素材与说明 ↗</button></div></div>
+</section>
+<div class="modal-backdrop" id="modal-backdrop" hidden><section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="关闭弹窗">×</button><span class="eyebrow" id="modal-eyebrow">START CLOUD GAMING</span><h2 id="modal-title"></h2><div id="modal-body"></div><div class="modal-actions" id="modal-actions"></div></section></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="controls.js"></script><script src="app.js"></script>
+</body>
+</html>
